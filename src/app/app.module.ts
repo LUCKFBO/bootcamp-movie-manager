@@ -4,18 +4,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DemoMaterialModule } from './material.module';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { MaterialModule } from './shared/material/material.module';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MovieModule } from './movie/movie.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    FooterComponent,
+    HeaderComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    MaterialModule,
+    LayoutModule,
+    MovieModule
 
   ],
   providers: [],
