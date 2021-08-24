@@ -3,45 +3,13 @@
   <mat-card class="center width50" >
     <form [formGroup]="options" (ngSubmit)="save()" (ngReset)="reset()">
       <mat-card-content>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Título *" name="titulo" formControlName="titulo">
-            <mat-error *ngIf="validate.hasErrorValidate(f.titulo, 'required')">Campo obrigatório</mat-error>
-            <mat-error *ngIf="validate.hasErrorValidate(f.titulo, 'minlength')">Campo precisa ter no mínimo 2 caracteres</mat-error>
-            <mat-error *ngIf="validate.hasErrorValidate(f.titulo, 'maxlength')">Campo precisa ter no máximo 256 caracteres</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Link Foto" name="urlFoto" formControlName="urlFoto">
-            <mat-error *ngIf="validate.hasErrorValidate(f.urlFoto, 'minlength')">Campo precisa ter no mínimo 10 caracteres</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-              <input readonly matInput [matDatepicker]="picker" placeholder="Data de Lançamento *" name="dtLancamento" formControlName="dtLancamento" (click)="picker.open()">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error *ngIf="validate.hasErrorValidate(f.dtLancamento, 'required')">Campo obrigatório</mat-error>
-            </mat-form-field>
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Descrição" name="descricao" formControlName="descricao"></textarea>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Nota IMDb *" name="nota" formControlName="nota" type="number" min="0" max="10" step="0.1">
-            <mat-error *ngIf="validate.hasErrorValidate(f.nota, 'required')">Campo obrigatório</mat-error>
-            <mat-error *ngIf="validate.hasErrorValidate(f.nota, 'min')">Campo precisa ter no mínimo o valor 0</mat-error>
-            <mat-error *ngIf="validate.hasErrorValidate(f.nota, 'max')">Campo precisa ter no máximo o valor 10</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Link IMDb" name="urlIMDB" formControlName="urlIMDB">
-            <mat-error *ngIf="validate.hasErrorValidate(f.urlIMDB, 'minlength')">Campo precisa ter no mínimo 10 caracteres</mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Gênero *" formControlName="genero">
-              <mat-option value="Ação">Açao</mat-option>
-              <mat-option value="Aventura">Aventura</mat-option>
-              <mat-option value="Ficção Científica">Ficção Científica</mat-option>
-              <mat-option value="Romance">Romance</mat-option>
-              <mat-option value="Terror">Terror</mat-option>
-            </mat-select>
-            <mat-error *ngIf="validate.hasErrorValidate(f.genero, 'required')">Campo obrigatório</mat-error>
-          </mat-form-field>
+          <app-input-text title="Titulo *" [formGroup]="options" controlName="titulo"></app-input-text>
+          <app-input-text title="Link Foto" [formGroup]="options" controlName="urlFoto"></app-input-text>
+          <app-input-date title="Data de Lançamento *" [formGroup]="options" controlName="dtLancamento"></app-input-date>
+          <app-input-textarea title="Descrição" [formGroup]="options" controlName="descricao"></app-input-textarea>
+          <app-input-number title="Nota IMDb *" [formGroup]="options" controlName="nota" step="0.1"></app-input-number>
+          <app-input-text title="Link IMDb" [formGroup]="options" controlName="urlIMDB"></app-input-text>
+          <app-input-select title="Gênero *" [formGroup]="options" controlName="genero"></app-input-select>
         </mat-card-content>
         <mat-card-actions>
           <button type="submit" color="accent" mat-raised-button>Salvar</button>
