@@ -8,7 +8,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MaterialModule } from './shared/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MovieModule } from './movie/movie.module';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { MovieModule } from './movie/movie.module';
     BrowserAnimationsModule,
     MaterialModule,
     LayoutModule,
-    MovieModule
 
   ],
   providers: [],
