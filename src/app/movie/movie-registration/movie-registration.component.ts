@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { generate } from 'rxjs';
+import { ValidateFieldService } from 'src/app/shared/components/field/validate-field.service';
 
 @Component({
   selector: 'app-movie-registration',
@@ -11,7 +11,7 @@ export class MovieRegistrationComponent implements OnInit {
 
   options: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(public validate: ValidateFieldService, private fb: FormBuilder) { }
 
   get f() {
     return this.options.controls;
