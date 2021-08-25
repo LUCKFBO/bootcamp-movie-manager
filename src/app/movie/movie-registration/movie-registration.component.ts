@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { MovieService } from 'src/app/core/movie.service';
 import { ValidateFieldService } from 'src/app/shared/components/field/validate-field.service';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'app-movie-registration',
@@ -10,8 +12,9 @@ import { ValidateFieldService } from 'src/app/shared/components/field/validate-f
 export class MovieRegistrationComponent implements OnInit {
 
   options: FormGroup;
+  generos: Array<string>;
 
-  constructor(public validate: ValidateFieldService, private fb: FormBuilder) { }
+  constructor(public validate: ValidateFieldService, private fb: FormBuilder, private movieService: MovieService) { }
 
   get f() {
     return this.options.controls;
@@ -29,18 +32,30 @@ export class MovieRegistrationComponent implements OnInit {
       genero: ['', [Validators.required]]
     });
 
+    this.generos =['Ação', 'Romance', 'Aventura', 'Terror', 'Ficção cientifica', 'Comédia', 'Drama'];
+
   }
 
-  save(): void {
+  submit(): void {
     this.options.markAllAsTouched();
     if(this.options.invalid){
       return;
     }
-    alert('Sucesso\n\n' + JSON.stringify(this.options.value, null, 4));
+    const movie = this.options.getRawValue() as Movie;
+    this.save(movie);
   }
 
   reset(): void {
     this.options.reset();
+  }
+
+  private save(movie: Movie): void{
+    this.movieService.save(movie).subscribe(() => {
+      alert('Sucesso');
+    },
+    () => {
+      alert('Erro ao salvar');
+    });
   }
 
 }

@@ -109,6 +109,16 @@
       "urlIMDb": "https://www.imdb.com/title/tt2527338/?ref_=vi_md_ti",
       "genero": "Aventura",
       "id": 11
+    },
+    {
+      "titulo": "Homem-Aranha: Longe de Casa",
+      "urlFoto": "https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_FMjpg_UY720_.jpg",
+      "dtLancamento": "2019-07-04T03:00:00.000Z",
+      "descricao": "Após os eventos de Vingadores: Ultimato, o Homem-Aranha deve se preparar para enfrentar novas ameaças em um mundo que tinha mudado para sempre.",
+      "nota": 7.5,
+      "urlIMDB": "https://www.imdb.com/title/tt6320628/?ref_=hm_tpks_tt_i_1_pd_tp1_cp",
+      "genero": "Aventura",
+      "id": 12
     }
   ]
 }
