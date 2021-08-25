@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { MaterialModule } from './shared/material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
+import { AlertComponent } from './shared/components/alert/alert.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     FooterComponent,
     HeaderComponent,
+    AlertComponent,
 
   ],
   imports: [
@@ -26,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     LayoutModule,
     HttpClientModule,
   ],
+  entryComponents: [AlertComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
