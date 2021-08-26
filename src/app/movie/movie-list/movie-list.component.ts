@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MovieService } from 'src/app/core/movie.service';
+import { ConfigParams } from 'src/app/shared/models/config-params';
+import { Movie } from 'src/app/shared/models/movie';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-list',
@@ -7,13 +12,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieListComponent implements OnInit {
 
-  constructor() { }
+  readonly noTumb = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg';
 
-  ngOnInit() {
+  config: ConfigParams = {
+    page: 0,
+    limitPage: 4,
+  };
+  movies: Movie[] = [];
+  filtrosListagem: FormGroup;
+  generos: Array<string>;
+
+
+  constructor(private movieService: MovieService, private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.listMovie();
+    this.filtrosListagem = this.fb.group({
+      texto: [''],
+      genero: ['']
+    });
+
+    this.filtrosListagem.get('texto').valueChanges.pipe(debounceTime(400)).subscribe((val: string) => {
+      this.config.search = val;
+      this.resetQuery();
+    });
+    this.filtrosListagem.get('genero').valueChanges.subscribe((val: string) => {
+      this.config.field = {tipo: 'genero', valor: val};
+      this.resetQuery();
+    });
+
+    this.generos =['Ação', 'Romance', 'Aventura', 'Terror', 'Ficção cientifica', 'Comédia', 'Drama'];
 
   }
 
-  open() {
+  onScroll(): void {
+    this.listMovie();
+  }
+
+  private listMovie(): void{
+    this.config.page++;
+    this.movieService.list(this.config).subscribe((movie: Movie[]) => this.movies.push(...movie));
+  }
+
+  private resetQuery(): void{
+    this.config.page = 0;
+    this.movies = [];
+    this.listMovie();
   }
 
 }

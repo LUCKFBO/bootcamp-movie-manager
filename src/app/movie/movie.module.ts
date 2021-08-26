@@ -6,6 +6,7 @@ import { MovieRegistrationComponent } from './movie-registration/movie-registrat
 import { MaterialModule } from '../shared/material/material.module';
 import { MovieListComponent } from './movie-list/movie-list.component';
 import { FieldModule } from '../shared/components/field/field.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { FieldModule } from '../shared/components/field/field.module';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    FieldModule
+    FieldModule,
+    InfiniteScrollModule
   ],
   declarations: [
     MovieRegistrationComponent,

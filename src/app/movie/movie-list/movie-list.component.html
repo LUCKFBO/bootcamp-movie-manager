@@ -1,95 +1,39 @@
 <mat-toolbar class="app-title">Filmes Cadastrados</mat-toolbar>
-<div class="home-content">
+<mat-card class="float-left margin-10 filtro-listagem" >
+  <form autocomplete="off" novalidate [formGroup]="filtrosListagem">
 
-  <mat-card class="home-card">
+      <div class="float-left width50">
+        <div class="padding-10">
+          <app-input-text title="Pesquise aqui" controlName="texto" [formGroup]="filtrosListagem"></app-input-text>
+        </div>
+      </div>
+      <div class="float-left width50">
+        <div class="padding-10">
+          <app-input-select title="Gênero" [optiones]="generos" [formGroup]="filtrosListagem" controlName="genero"></app-input-select>
+        </div>
+      </div>
+  </form>
+</mat-card>
+<div class="home-content" infiniteScroll (scrolled)="onScroll()" *ngIf="movies.length; else empty">
+  <mat-card class="home-card" *ngFor="let movie of movies">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Angular Material @ngrx</mat-card-title>
-      <mat-card-subtitle>Check this Home</mat-card-subtitle>
+      <div mat-card-avatar></div>
+      <mat-card-title>{{movie.titulo}}</mat-card-title>
+      <mat-card-subtitle>{{movie.genero}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="../assets/images/angular-material-post.png" alt="Angular Material 7">
+    <img mat-card-image [src]="movie.urlFoto || noTumb">
     <mat-card-content>
-      <p>
-        Angular Material with @ngrx and lazy loading, click OPEN button then
-        you can see sidenav content (with the current store value)
+      <p class="break-line">
+        {{movie.descricao || 'Nenhuma descrição informada'}}
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button color="accent" (click)="open()" mat-raised-button>OPEN</button>
-    </mat-card-actions>
-  </mat-card>
-
-  <mat-card class="home-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Angular Material @ngrx</mat-card-title>
-      <mat-card-subtitle>Check this Home</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="../assets/images/angular-material-post.png" alt="Angular Material 7">
-    <mat-card-content>
-      <p>
-        Angular Material with @ngrx and lazy loading, click OPEN button then
-        you can see sidenav content (with the current store value)
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="accent" (click)="open()" mat-raised-button>OPEN</button>
-    </mat-card-actions>
-  </mat-card>
-
-  <mat-card class="home-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Angular Material @ngrx</mat-card-title>
-      <mat-card-subtitle>Check this Home</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="../assets/images/angular-material-post.png" alt="Angular Material 7">
-    <mat-card-content>
-      <p>
-        Angular Material with @ngrx and lazy loading, click OPEN button then
-        you can see sidenav content (with the current store value)
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="accent" (click)="open()" mat-raised-button>OPEN</button>
-    </mat-card-actions>
-  </mat-card>
-
-  <mat-card class="home-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Angular Material @ngrx</mat-card-title>
-      <mat-card-subtitle>Check this Home</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="../assets/images/angular-material-post.png" alt="Angular Material 7">
-    <mat-card-content>
-      <p>
-        Angular Material with @ngrx and lazy loading, click OPEN button then
-        you can see sidenav content (with the current store value)
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="accent" (click)="open()" mat-raised-button>OPEN</button>
-    </mat-card-actions>
-  </mat-card>
-
-
-  <mat-card class="home-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Angular Material @ngrx</mat-card-title>
-      <mat-card-subtitle>Check this Home</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="../assets/images/angular-material-post.png" alt="Angular Material 7">
-    <mat-card-content>
-      <p>
-        Angular Material with @ngrx and lazy loading, click OPEN button then
-        you can see sidenav content (with the current store value)
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="accent" (click)="open()" mat-raised-button>OPEN</button>
+      <button color="accent" mat-raised-button>ABRIR</button>
     </mat-card-actions>
   </mat-card>
 
 </div>
+
+<ng-template #empty>
+  <h1 class="full-width main-div">Nenhum registro encontrado!</h1>
+</ng-template>
