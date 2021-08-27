@@ -4,6 +4,7 @@ import { MovieService } from 'src/app/core/movie.service';
 import { ConfigParams } from 'src/app/shared/models/config-params';
 import { Movie } from 'src/app/shared/models/movie';
 import { debounceTime } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -23,7 +24,7 @@ export class MovieListComponent implements OnInit {
   generos: Array<string>;
 
 
-  constructor(private movieService: MovieService, private fb: FormBuilder) { }
+  constructor(private movieService: MovieService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.listMovie();
@@ -47,6 +48,10 @@ export class MovieListComponent implements OnInit {
 
   onScroll(): void {
     this.listMovie();
+  }
+
+  open(id: number): void {
+    this.router.navigateByUrl('/filmes/' + id);
   }
 
   private listMovie(): void{

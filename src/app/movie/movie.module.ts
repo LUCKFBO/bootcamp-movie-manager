@@ -7,6 +7,7 @@ import { MaterialModule } from '../shared/material/material.module';
 import { MovieListComponent } from './movie-list/movie-list.component';
 import { FieldModule } from '../shared/components/field/field.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   ],
   declarations: [
     MovieRegistrationComponent,
-    MovieListComponent
+    MovieListComponent,
+    MovieDetailComponent
   ]
 })
 export class MovieModule { }

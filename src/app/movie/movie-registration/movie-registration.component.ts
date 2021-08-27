@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from 'src/app/core/movie.service';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { ValidateFieldService } from 'src/app/shared/components/field/validate-field.service';
@@ -15,26 +15,25 @@ import { Movie } from 'src/app/shared/models/movie';
 })
 export class MovieRegistrationComponent implements OnInit {
 
+  id: number;
   options: FormGroup;
   generos: Array<string>;
 
-  constructor(public validate: ValidateFieldService, private fb: FormBuilder, private movieService: MovieService, public dialog: MatDialog, private router: Router) { }
+  constructor(public validate: ValidateFieldService, private fb: FormBuilder, private movieService: MovieService, public dialog: MatDialog, private router: Router, private ar: ActivatedRoute) { }
 
   get f() {
     return this.options.controls;
   }
 
   ngOnInit() {
-
-    this.options = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(256)]],
-      urlFoto: ['', [Validators.minLength(10)]],
-      dtLancamento: ['', [Validators.required]],
-      descricao: [''],
-      nota: [0, [Validators.required, Validators.min(0), Validators.max(10)]],
-      urlIMDB: ['', [Validators.minLength(10)]],
-      genero: ['', [Validators.required]]
-    });
+    this.id = this.ar.snapshot.params['id'];
+    if(this.id){
+      this.movieService.visualize(this.id).subscribe((movie: Movie) => this.createForm(movie));
+    }
+    else
+    {
+      this.createForm(this.createEmptyMovie());
+    }
 
     this.generos =['Ação', 'Romance', 'Aventura', 'Terror', 'Ficção cientifica', 'Comédia', 'Drama'];
 
@@ -46,11 +45,45 @@ export class MovieRegistrationComponent implements OnInit {
       return;
     }
     const movie = this.options.getRawValue() as Movie;
-    this.save(movie);
+    if(this.id){
+      movie.id = this.id;
+      this.update(movie);
+    }
+    else {
+      this.save(movie);
+    }
+
   }
 
   reset(): void {
     this.options.reset();
+  }
+
+  private createForm(movie: Movie): void
+  {
+    this.options = this.fb.group({
+      titulo: [movie.titulo, [Validators.required, Validators.minLength(2), Validators.maxLength(256)]],
+      urlFoto: [movie.urlFoto, [Validators.minLength(10)]],
+      dtLancamento: [movie.dtLancamento, [Validators.required]],
+      descricao: [movie.descricao],
+      nota: [movie.nota, [Validators.required, Validators.min(0), Validators.max(10)]],
+      urlIMDB: [movie.urlIMDB, [Validators.minLength(10)]],
+      genero: [movie.genero, [Validators.required]]
+    });
+
+  }
+
+  private createEmptyMovie(): Movie {
+    return {
+      id: null,
+      titulo: null,
+      urlFoto: null,
+      dtLancamento: null,
+      descricao: null,
+      nota: null,
+      urlIMDB: null,
+      genero: null
+    } as Movie;
   }
 
   private save(movie: Movie): void{
@@ -78,6 +111,31 @@ export class MovieRegistrationComponent implements OnInit {
         data: {
           title: 'Erro ao salvar o registro!',
           description: 'Não conseguimos salvar seu registro, favor tentar novamente mais tarde',
+          colorBtnSuccess: 'warn',
+          btnSuccess: 'Fechar',
+        } as Alert
+      };
+      this.dialog.open(AlertComponent, config);
+    });
+  }
+
+
+  private update(movie: Movie): void{
+    this.movieService.update(movie).subscribe(() => {
+      const config = {
+        data: {
+          description: 'Seu registro foi atualizado com sucesso',
+          btnSuccess: 'Ir para a listagem',
+        } as Alert
+      };
+      const dialogRef = this.dialog.open(AlertComponent, config);
+      dialogRef.afterClosed().subscribe(() => this.router.navigateByUrl('filmes'));
+    },
+    () => {
+      const config = {
+        data: {
+          title: 'Erro ao editar o registro!',
+          description: 'Não conseguimos editar seu registro, favor tentar novamente mais tarde',
           colorBtnSuccess: 'warn',
           btnSuccess: 'Fechar',
         } as Alert

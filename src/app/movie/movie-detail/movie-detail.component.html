@@ -1,0 +1,18 @@
+<mat-list *ngIf="movie; else empty">
+  <mat-list-item> Título: {{movie.titulo}} </mat-list-item>
+  <mat-list-item> Data de lançamento: {{movie.dtLancamento | date: 'dd/MM/yyyy' }} </mat-list-item>
+  <mat-list-item> Gênero: {{movie.genero}} </mat-list-item>
+  <mat-list-item class="break-line"> Descrição: {{movie.descricao}} </mat-list-item>
+  <mat-list-item> Nota: <a [href]="movie.urlIMDB" target="_blank"> {{movie.nota}}</a> </mat-list-item>
+  <img mat-card-image [src]="movie.urlFoto || noTumb" >
+</mat-list>
+<mat-card>
+  <mat-card-actions>
+    <button color="accent" mat-raised-button (click)="edit()">Editar</button>
+    <button color="warn" mat-raised-button (click)="exclude()">Excluir</button>
+  </mat-card-actions>
+</mat-card>
+
+<ng-template #empty>
+  <h1 class="full-width main-div">Nenhum registro encontrado!</h1>
+</ng-template>

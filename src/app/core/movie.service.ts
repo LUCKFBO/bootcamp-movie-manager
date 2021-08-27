@@ -20,9 +20,21 @@ export class MovieService {
     return this.http.post<Movie>(url, filme);
   }
 
+  update(filme: Movie): Observable<Movie>{
+    return this.http.put<Movie>(url + filme.id, filme);
+  }
+
   list(config: ConfigParams): Observable<Movie[]>{
     const configParams = this.configService.configurarParametros(config);
     return this.http.get<Movie[]>(url, {params: configParams});
+  }
+
+  visualize(id: number): Observable<Movie>{
+    return this.http.get<Movie>(url + id);
+  }
+
+  exclude(id: number): Observable<void>{
+    return this.http.delete<void>(url + id);
   }
 
 
